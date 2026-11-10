@@ -52,7 +52,9 @@
       pbjs.que.push(function () {
         pbjs.onEvent('bidWon', function (bid) {
           if (bid.mediaType === 'banner') {
-            demo.log('Banner ' + bid.adUnitCode + ' is shown', 'Prebid fires burl; Boldwin pixel and nurl are in the ad markup', 'ok');
+            // 1 is the ORTB event type "impression": the adapter hands burl to Prebid as such a tracker.
+            var burls = (bid.eventtrackers || []).filter(function (tracker) { return tracker.event === 1; }).length;
+            demo.log('Banner ' + bid.adUnitCode + ' is shown', 'Prebid is to fire ' + burls + ' burl tracker from the bid. Prebid also put nurl into the ad markup as a pixel. Check in DevTools > Network.', 'ok');
           }
         });
         var bids = [{ bidder: 'boldwinx', params: { epid: demo.epid } }];

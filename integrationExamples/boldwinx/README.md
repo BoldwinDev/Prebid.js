@@ -9,8 +9,8 @@ Three pages that request bids from Boldwin. Video ads play with Google IMA.
   The adapter sends one request per ad unit, because the endpoint takes one impression per request.
 
 For video the adapter puts `burl` and `nurl` into the VAST as `<Impression>` pixels, so the player opens
-them when the ad starts. For banners Prebid fires `burl` when it shows the ad, and `nurl` is a pixel in
-the ad markup. The log on each page shows the steps, and the panel below it lists the pixels in the VAST.
+them when the ad starts. For banners Prebid fires `burl` when it shows the ad, and Prebid adds `nurl` to
+the ad markup as a pixel. The log on each page shows the steps, and the panel below it lists the pixels in the VAST.
 
 ## Run
 
