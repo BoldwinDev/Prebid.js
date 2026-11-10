@@ -32,11 +32,20 @@
     }
   }
 
-  function showVastPixels(vastXml) {
+  function vastPixels(vastXml) {
     var doc = new DOMParser().parseFromString(vastXml, 'text/xml');
-    var urls = Array.prototype.map.call(doc.querySelectorAll('Impression'), function (n) {
+    return Array.prototype.map.call(doc.querySelectorAll('Impression'), function (n) {
       return n.textContent.trim();
     });
+  }
+
+  // The page cannot see the player's own requests, so the log says what the player is to do.
+  function logAdStarted(title, vastXml) {
+    log(title, 'The player is to open the ' + vastPixels(vastXml).length + ' impression pixels of the VAST, each once. Check in DevTools > Network.', 'ok');
+  }
+
+  function showVastPixels(vastXml) {
+    var urls = vastPixels(vastXml);
     var list = document.getElementById('pixels');
     list.innerHTML = '';
     urls.forEach(function (url) {
@@ -88,7 +97,7 @@
       var adsManager = e.getAdsManager(video);
       adsManager.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, onError);
       adsManager.addEventListener(google.ima.AdEvent.Type.IMPRESSION, function () {
-        log('Video ad started: the player opened the impression pixels', 'Boldwin pixel, burl and nurl, each once', 'ok');
+        logAdStarted('Video ad started', bid.vastXml);
       });
       adsManager.addEventListener(google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
         adsManager.destroy();
@@ -138,6 +147,7 @@
     log: log,
     showVastPixels: showVastPixels,
     requireEpid: requireEpid,
+    logAdStarted: logAdStarted,
     hideSlot: hideSlot,
     renderOutstream: renderOutstream
   };
