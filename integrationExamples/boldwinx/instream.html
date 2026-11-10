@@ -80,7 +80,7 @@
       // The plugin takes ad event listeners only once IMA has loaded the ad.
       player.on('ads-manager', function (e) {
         e.adsManager.addEventListener(google.ima.AdEvent.Type.IMPRESSION, function () {
-          demo.log('Ad started: the player opened the impression pixels', 'Boldwin pixel, burl and nurl, each once', 'ok');
+          demo.logAdStarted('Ad started', vastXml);
         });
         e.adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, function () {
           demo.log('Ad finished', 'The video goes on.');
