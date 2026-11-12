@@ -6,7 +6,7 @@ Three pages that request bids from Boldwin. Video ads play with Google IMA.
 - `outstream.html`: the ad is a video block of its own in the middle of an article. Prebid runs a
   renderer that the page provides, because the adapter has none.
 - `multi.html`: three ad units on one page: a 728x90 banner, an outstream video and a 300x250 banner.
-  The adapter sends one request per ad unit, because the endpoint takes one impression per request.
+  The adapter sends the three ad units in one request, one impression each.
 
 For video the adapter puts `burl` and `nurl` into the VAST as `<Impression>` pixels, so the player opens
 them when the ad starts. For banners Prebid fires `burl` when it shows the ad, and Prebid adds `nurl` to

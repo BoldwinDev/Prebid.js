@@ -48,7 +48,7 @@
     var pbjs = window.pbjs = window.pbjs || { que: [] };
 
     if (demo.requireEpid()) {
-      demo.log('Prebid asks Boldwin for 3 bids', 'One POST to pbjs.algotoro.com/bid?epid=' + demo.epid + ' for each ad unit');
+      demo.log('Prebid asks Boldwin for 3 bids', 'One POST to pbjs.algotoro.com/bid?epid=' + demo.epid + ' with one impression for each ad unit');
       pbjs.que.push(function () {
         pbjs.onEvent('bidWon', function (bid) {
           if (bid.mediaType === 'banner') {
