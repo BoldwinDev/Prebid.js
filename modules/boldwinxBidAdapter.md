@@ -11,8 +11,8 @@ Maintainer: info@bold-win.com
 Connects to the Boldwin endpoint that the `epid` (endpoint ID) param selects. Supports banner,
 video (instream; outstream needs the publisher's own renderer) and native (ORTB native request).
 
-Contact info@bold-win.com to get an `epid`. Every ad unit goes into its own request with one
-impression, because the endpoint accepts one impression per request.
+Contact info@bold-win.com to get an `epid`. The ad units of one `epid` go into one request,
+one impression each.
 
 Bids are net CPMs in USD. Price floors are sent in USD; a floor in another currency is left
 out of the request, and Prebid still enforces it on the bids.
@@ -20,8 +20,8 @@ out of the request, and Prebid still enforces it on the bids.
 The adapter fills in `${AUCTION_PRICE}` in the markup and in the notice URLs. For video it puts
 `burl` and `nurl` into the VAST as `<Impression>` pixels, so the player fires them when the ad
 starts, whoever plays it. For banner and native it hands them to Prebid as event trackers:
-Prebid fires `burl` when the bid becomes billable and native `nurl` when the bid wins. Banner
-markup already carries its `nurl`.
+Prebid fires `burl` when the bid becomes billable and native `nurl` when the bid wins. For
+banners Prebid adds `nurl` to the markup as a pixel.
 
 User sync is an image pixel. It carries the GDPR, US Privacy and GPP signals Prebid has, and
 no sync is made when COPPA applies.
