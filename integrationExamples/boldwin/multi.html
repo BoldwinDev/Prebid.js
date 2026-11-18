@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BoldwinX several ad units demo</title>
+  <title>Boldwin several ad units demo</title>
   <link rel="stylesheet" href="demo.css">
   <script async src="../../build/dev/prebid.js"></script>
   <script src="demo.js"></script>
 </head>
 <body>
   <header>
-    <h1>BoldwinX: two banners and a video</h1>
+    <h1>Boldwin: two banners and a video</h1>
     <p>One page with three ad units. Prebid asks Boldwin for all three in one auction. epid: <code id="epid"></code></p>
     <form id="epid-form" hidden><input name="epid" placeholder="epid from Boldwin" aria-label="epid"><button>Load</button></form>
     <nav><a href="instream.html">Instream</a><a href="outstream.html">Outstream</a><a href="multi.html" aria-current="page">Banners and video</a></nav>
@@ -57,7 +57,7 @@
             demo.log('Banner ' + bid.adUnitCode + ' is shown', 'Prebid is to fire ' + burls + ' burl tracker from the bid. Prebid also put nurl into the ad markup as a pixel. Check in DevTools > Network.', 'ok');
           }
         });
-        var bids = [{ bidder: 'boldwinx', params: { epid: demo.epid } }];
+        var bids = [{ bidder: 'boldwin', params: { epid: demo.epid } }];
         var adUnits = Object.keys(BANNERS).map(function (code) {
           return { code: code, mediaTypes: { banner: { sizes: [BANNERS[code]] } }, bids: bids };
         });
@@ -66,7 +66,7 @@
           mediaTypes: {
             video: { context: 'outstream', playerSize: [640, 360], mimes: ['video/mp4'], protocols: [2, 3, 5, 6], plcmt: 4 }
           },
-          // BoldwinX has no player of its own, so the site gives Prebid one. Here it is Google IMA.
+          // Boldwin has no player of its own, so the site gives Prebid one. Here it is Google IMA.
           renderer: {
             url: 'https://imasdk.googleapis.com/js/sdkloader/ima3.js',
             render: demo.renderOutstream

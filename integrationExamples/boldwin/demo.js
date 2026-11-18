@@ -1,4 +1,4 @@
-// Shared helpers for the BoldwinX demo pages: epid from the URL, the step log, the VAST pixel list
+// Shared helpers for the Boldwin demo pages: epid from the URL, the step log, the VAST pixel list
 // and the outstream player.
 (function () {
   var params = new URLSearchParams(location.search);
@@ -74,7 +74,7 @@
     document.getElementById(code + '-label').hidden = true;
   }
 
-  // Outstream renderer for Prebid: BoldwinX has no player of its own, so the page gives one (Google IMA).
+  // Outstream renderer for Prebid: Boldwin has no player of its own, so the page gives one (Google IMA).
   function renderOutstream(bid) {
     var slot = document.getElementById(bid.adUnitCode);
     var video = document.createElement('video');
