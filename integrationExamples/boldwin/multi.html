@@ -57,7 +57,7 @@
             demo.log('Banner ' + bid.adUnitCode + ' is shown', 'Prebid is to fire ' + burls + ' burl tracker from the bid. Prebid also put nurl into the ad markup as a pixel. Check in DevTools > Network.', 'ok');
           }
         });
-        var bids = [{ bidder: 'boldwin', params: { epid: demo.epid } }];
+        var bids = [{ bidder: 'boldwin', params: { endpointId: demo.epid } }];
         var adUnits = Object.keys(BANNERS).map(function (code) {
           return { code: code, mediaTypes: { banner: { sizes: [BANNERS[code]] } }, bids: bids };
         });
