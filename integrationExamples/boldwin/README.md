@@ -1,4 +1,4 @@
-# BoldwinX demo
+# Boldwin demo
 
 Three pages that request bids from Boldwin. Video ads play with Google IMA.
 
@@ -15,14 +15,14 @@ the ad markup as a pixel. The log on each page shows the steps, and the panel be
 ## Run
 
 ```bash
-npx gulp serve-fast --modules=boldwinxBidAdapter
+npx gulp serve-fast --modules=boldwinBidAdapter
 ```
 
 Then open, with the epid issued by Boldwin:
 
-- `http://localhost:9999/integrationExamples/boldwinx/instream.html?epid=<EPID>`
-- `http://localhost:9999/integrationExamples/boldwinx/outstream.html?epid=<EPID>`
-- `http://localhost:9999/integrationExamples/boldwinx/multi.html?epid=<EPID>`
+- `http://localhost:9999/integrationExamples/boldwin/instream.html?epid=<EPID>`
+- `http://localhost:9999/integrationExamples/boldwin/outstream.html?epid=<EPID>`
+- `http://localhost:9999/integrationExamples/boldwin/multi.html?epid=<EPID>`
 
 An ad blocker can block Prebid, Google IMA or the Boldwin hosts; turn it off for these pages.
 To see the pixels, open DevTools > Network and filter by `algotoro`.
