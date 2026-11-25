@@ -1,8 +1,9 @@
-// Shared helpers for the Boldwin demo pages: epid from the URL, the step log, the VAST pixel list
-// and the outstream player.
+// Shared helpers for the Boldwin demo pages: epid and sync type from the URL, the step log,
+// the VAST pixel list, the user sync and the outstream player.
 (function () {
   var params = new URLSearchParams(location.search);
   var epid = (params.get('epid') || '').trim();
+  var syncType = params.get('sync') === 'iframe' ? 'iframe' : 'image';
   var started = Date.now();
 
   function el(tag, cls, text) {
@@ -62,10 +63,56 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var value = form.elements.epid.value.trim();
-      if (value) location.search = '?epid=' + encodeURIComponent(value);
+      if (!value) return;
+      params.set('epid', value);
+      location.search = params.toString();
     });
     log('No epid in the page address', 'Enter the epid from Boldwin above.', 'error');
     return false;
+  }
+
+  // Prebid allows only image syncs by default, so ?sync=iframe turns the iframe sync on for boldwin.
+  // The page cannot read the sync response, so the log shows the address Prebid opened.
+  function setupUserSync(pbjs) {
+    if (syncType === 'iframe') {
+      pbjs.setConfig({ userSync: { filterSettings: { iframe: { bidders: ['boldwin'], filter: 'include' } } } });
+    }
+    var other = syncType === 'iframe' ? 'image' : 'iframe';
+    log('User sync: ' + syncType, 'Prebid is to open one ' + syncType + ' sync about 3 s after the bids. Add &sync=' + other + ' to the address to see the ' + other + ' sync.');
+    watchUserSync();
+  }
+
+  function describeSync(url) {
+    try {
+      var u = new URL(url);
+      return u.host + u.pathname + (u.searchParams.get('type') ? '?type=' + u.searchParams.get('type') : '') + ' with the consent signals';
+    } catch (e) {
+      return url;
+    }
+  }
+
+  function isSync(url) {
+    return /\/usersync(\?|$)/.test(url);
+  }
+
+  function watchUserSync() {
+    // Prebid appends the sync iframe to <html>, not to <body>.
+    new MutationObserver(function (records) {
+      records.forEach(function (record) {
+        record.addedNodes.forEach(function (node) {
+          if (node.tagName === 'IFRAME' && isSync(node.src)) {
+            log('Prebid opened the iframe sync', describeSync(node.src), 'ok');
+          }
+        });
+      });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+    new PerformanceObserver(function (list) {
+      list.getEntries().forEach(function (entry) {
+        if (entry.initiatorType === 'img' && isSync(entry.name)) {
+          log('Prebid opened the image sync', describeSync(entry.name), 'ok');
+        }
+      });
+    }).observe({ type: 'resource', buffered: true });
   }
 
   // The ad unit code is also the id of its slot; the label above the slot has the id <code>-label.
@@ -147,6 +194,7 @@
     log: log,
     showVastPixels: showVastPixels,
     requireEpid: requireEpid,
+    setupUserSync: setupUserSync,
     logAdStarted: logAdStarted,
     hideSlot: hideSlot,
     renderOutstream: renderOutstream

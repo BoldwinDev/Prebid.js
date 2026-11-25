@@ -43,6 +43,7 @@
     if (demo.requireEpid()) {
       demo.log('Prebid asks Boldwin for a video bid', 'POST pbjs.algotoro.com/bid?epid=' + demo.epid);
       pbjs.que.push(function () {
+        demo.setupUserSync(pbjs);
         pbjs.addAdUnits([{
           code: AD_UNIT,
           mediaTypes: {

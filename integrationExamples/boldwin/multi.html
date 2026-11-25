@@ -50,6 +50,7 @@
     if (demo.requireEpid()) {
       demo.log('Prebid asks Boldwin for 3 bids', 'One POST to pbjs.algotoro.com/bid?epid=' + demo.epid + ' with one impression for each ad unit');
       pbjs.que.push(function () {
+        demo.setupUserSync(pbjs);
         pbjs.onEvent('bidWon', function (bid) {
           if (bid.mediaType === 'banner') {
             // 1 is the ORTB event type "impression": the adapter hands burl to Prebid as such a tracker.

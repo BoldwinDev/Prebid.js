@@ -12,6 +12,10 @@ For video the adapter puts `burl` and `nurl` into the VAST as `<Impression>` pix
 them when the ad starts. For banners Prebid fires `burl` when it shows the ad, and Prebid adds `nurl` to
 the ad markup as a pixel. The log on each page shows the steps, and the panel below it lists the pixels in the VAST.
 
+Each page also shows the user sync. Prebid allows only image syncs by default, so a page opens the image
+sync. Add `&sync=iframe` to the address to allow the iframe sync for `boldwin`; then the adapter returns
+the iframe instead. Prebid opens the sync about 3 seconds after the bids.
+
 ## Run
 
 ```bash
@@ -23,6 +27,7 @@ Then open, with the epid issued by Boldwin:
 - `http://localhost:9999/integrationExamples/boldwin/instream.html?epid=<EPID>`
 - `http://localhost:9999/integrationExamples/boldwin/outstream.html?epid=<EPID>`
 - `http://localhost:9999/integrationExamples/boldwin/multi.html?epid=<EPID>`
+- `http://localhost:9999/integrationExamples/boldwin/multi.html?epid=<EPID>&sync=iframe` for the iframe sync
 
 An ad blocker can block Prebid, Google IMA or the Boldwin hosts; turn it off for these pages.
 To see the pixels, open DevTools > Network and filter by `algotoro`.
