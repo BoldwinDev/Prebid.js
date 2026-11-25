@@ -20,6 +20,7 @@
     row.appendChild(el('span', 'title', title));
     if (detail) row.appendChild(el('span', 'detail', detail));
     list.appendChild(row);
+    return row;
   }
 
   // Shows only host, path and price of each <Impression> URL; the rest of the query is a long token.
@@ -78,7 +79,13 @@
       pbjs.setConfig({ userSync: { filterSettings: { iframe: { bidders: ['boldwin'], filter: 'include' } } } });
     }
     var other = syncType === 'iframe' ? 'image' : 'iframe';
-    log('User sync: ' + syncType, 'Prebid is to open one ' + syncType + ' sync about 3 s after the bids. Add &sync=' + other + ' to the address to see the ' + other + ' sync.');
+    var row = log('User sync: ' + syncType, 'Prebid is to open one ' + syncType + ' sync about 3 s after the bids.');
+    // A ready link, because the page reads only the first sync value and an appended &sync= has no effect.
+    var otherParams = new URLSearchParams(location.search);
+    otherParams.set('sync', other);
+    var link = el('a', null, 'Open this page with the ' + other + ' sync');
+    link.href = '?' + otherParams.toString();
+    row.appendChild(el('span', 'detail')).appendChild(link);
     watchUserSync();
   }
 
