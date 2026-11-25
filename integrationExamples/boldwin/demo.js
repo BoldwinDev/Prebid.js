@@ -189,6 +189,13 @@
     slot.appendChild(button);
   }
 
+  // The menu links keep the page address options, so epid and sync stay set on the other pages.
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('nav a').forEach(function (link) {
+      link.search = location.search;
+    });
+  });
+
   window.demo = {
     epid: epid,
     log: log,
